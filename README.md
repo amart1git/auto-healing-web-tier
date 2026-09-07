@@ -1,28 +1,30 @@
-# Auto-Healing, N+1 Web Tier Infrastructure
+\# Auto-Healing, N+1 Web Tier Infrastructure
 
 
 
-# Cloud Provider Choice & Trade-offs
+\## Cloud Provider Choice \& Trade-offs
 
-Selected Platform: AWS + Terraform (v1.6+)
-
-
-
-*Why AWS?* AWS Auto Scaling Groups integrated directly with Application Load Balancer (ALB) health checks provide standard out-of-the-box target replacement with minimal latency.
-
-*Why Terraform?* Declarative state management provides strict idempotency (self-provisioning). Executing a second run without configuration edits results in zero changes (`No changes`).
+\*\*Selected Platform:\*\* AWS + Terraform (v1.6+)
 
 
 
----
+\* \*\*Why AWS?\*\* AWS Auto Scaling Groups integrated directly with Application Load Balancer (ALB) health checks provide standard out-of-the-box target replacement with minimal latency.
+
+\* \*\*Why Terraform?\*\* Declarative state management provides strict \*\*idempotency\*\* (self-provisioning). Executing a second run without configuration edits results in zero changes (`No changes`).
 
 
 
-# Architecture Diagram
+\---
 
 
 
-                          [ Internet Traffic ]
+\## Architecture Diagram
+
+
+
+```text
+
+                          \[ Internet Traffic ]
 
                                    │
 
@@ -62,9 +64,9 @@ Selected Platform: AWS + Terraform (v1.6+)
 
 │   │ EC2 Instance (1)  │   │           │   │ EC2 Instance (2)  │   │
 
-│   │  [Docker Engine]  │   │           │   │  [Docker Engine]  │   │
+│   │  \[Docker Engine]  │   │           │   │  \[Docker Engine]  │   │
 
-│   │ └─ NGINX Container│   │           │   │ └─ NGINX Container│   │
+│   │  └─ NGINX Container│  │           │   │  └─ NGINX Container│  │
 
 │   └───────────────────┘   │           │   └───────────────────┘   │
 
@@ -77,7 +79,7 @@ Selected Platform: AWS + Terraform (v1.6+)
                          (Health Check: ELB)
 
 
-# Architecture & Deliverables Overview
+\## Overview
 
 auto-healing-web-tier/
 ├── .github/
@@ -96,7 +98,7 @@ auto-healing-web-tier/
 
 
 
-# Key Technical Criteria Mapping
+\## Key Technical Criteria Mapping
 
 	Self-Healing & N+1 Capacity: The Auto Scaling Group (aws_autoscaling_group) maintains min_size = 2 and desired_capacity = 2 across two public subnets in different Availability Zones. 
 	health_check_type = "ELB" ensures that if an HTTP health check fails or an instance is terminated, the ASG automatically replaces it without downtime.
