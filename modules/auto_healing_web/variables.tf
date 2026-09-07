@@ -1,4 +1,4 @@
-﻿variable "environment" {
+variable "environment" {
   type        = string
   description = "Environment tag (e.g., prod, dev)"
 }
